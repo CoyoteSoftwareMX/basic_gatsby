@@ -1,0 +1,17 @@
+FROM node:alpine
+WORKDIR /app
+
+# COPY the package.json file, update any deps and install them
+COPY package.json .
+RUN npm update
+RUN npm install -g gatsby-cli
+RUN npm install
+
+EXPOSE 8000
+
+# copy the whole source folder(the dir is relative to the Dockerfile
+COPY . .
+
+ENV NODE_ENV=development
+
+CMD ["gatsby", "develop", "--host", "0.0.0.0", "--port", "8000"]
